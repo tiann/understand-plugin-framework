@@ -17,7 +17,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.weishu.intercept_activity.app"
+        applicationId "com.weishu.upf.dynamic_proxy_hook.app2"
         minSdkVersion 8
         targetSdkVersion 19
         versionCode 1

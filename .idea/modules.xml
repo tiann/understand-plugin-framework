@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dynamic-proxy-hook/dynamic-proxy-hook.iml" filepath="$PROJECT_DIR$/dynamic-proxy-hook/dynamic-proxy-hook.iml" />
       <module fileurl="file://$PROJECT_DIR$/intercept-activity/intercept-activity.iml" filepath="$PROJECT_DIR$/intercept-activity/intercept-activity.iml" />
       <module fileurl="file://$PROJECT_DIR$/understand-plugin-framework.iml" filepath="$PROJECT_DIR$/understand-plugin-framework.iml" />
     </modules>
