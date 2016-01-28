@@ -1,0 +1,49 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/weishu/dev/github/understand-plugin-framework/intercept-activity/src/main/AndroidManifest.xml:1:1-25:12
+	package
+		ADDED from /Users/weishu/dev/github/understand-plugin-framework/intercept-activity/src/main/AndroidManifest.xml:2:11-54
+		INJECTED from /Users/weishu/dev/github/understand-plugin-framework/intercept-activity/src/main/AndroidManifest.xml
+		INJECTED from /Users/weishu/dev/github/understand-plugin-framework/intercept-activity/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/weishu/dev/github/understand-plugin-framework/intercept-activity/src/main/AndroidManifest.xml
+		INJECTED from /Users/weishu/dev/github/understand-plugin-framework/intercept-activity/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/weishu/dev/github/understand-plugin-framework/intercept-activity/src/main/AndroidManifest.xml:1:11-69
+	android:versionCode
+		INJECTED from /Users/weishu/dev/github/understand-plugin-framework/intercept-activity/src/main/AndroidManifest.xml
+		INJECTED from /Users/weishu/dev/github/understand-plugin-framework/intercept-activity/src/main/AndroidManifest.xml
+application
+ADDED from /Users/weishu/dev/github/understand-plugin-framework/intercept-activity/src/main/AndroidManifest.xml:4:5-23:19
+	android:label
+		ADDED from /Users/weishu/dev/github/understand-plugin-framework/intercept-activity/src/main/AndroidManifest.xml:6:13-45
+	android:allowBackup
+		ADDED from /Users/weishu/dev/github/understand-plugin-framework/intercept-activity/src/main/AndroidManifest.xml:5:13-39
+	android:icon
+		ADDED from /Users/weishu/dev/github/understand-plugin-framework/intercept-activity/src/main/AndroidManifest.xml:7:13-47
+activity#com.weishu.intercept_activity.app.MainActivity
+ADDED from /Users/weishu/dev/github/understand-plugin-framework/intercept-activity/src/main/AndroidManifest.xml:10:9-15:20
+	android:name
+		ADDED from /Users/weishu/dev/github/understand-plugin-framework/intercept-activity/src/main/AndroidManifest.xml:10:19-47
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from /Users/weishu/dev/github/understand-plugin-framework/intercept-activity/src/main/AndroidManifest.xml:11:13-14:29
+action#android.intent.action.MAIN
+ADDED from /Users/weishu/dev/github/understand-plugin-framework/intercept-activity/src/main/AndroidManifest.xml:12:17-68
+	android:name
+		ADDED from /Users/weishu/dev/github/understand-plugin-framework/intercept-activity/src/main/AndroidManifest.xml:12:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /Users/weishu/dev/github/understand-plugin-framework/intercept-activity/src/main/AndroidManifest.xml:13:17-76
+	android:name
+		ADDED from /Users/weishu/dev/github/understand-plugin-framework/intercept-activity/src/main/AndroidManifest.xml:13:27-74
+activity#com.weishu.intercept_activity.app.RawActivity
+ADDED from /Users/weishu/dev/github/understand-plugin-framework/intercept-activity/src/main/AndroidManifest.xml:20:9-48
+	android:name
+		ADDED from /Users/weishu/dev/github/understand-plugin-framework/intercept-activity/src/main/AndroidManifest.xml:20:19-46
+uses-sdk
+INJECTED from /Users/weishu/dev/github/understand-plugin-framework/intercept-activity/src/main/AndroidManifest.xml reason: use-sdk injection requested
+	android:targetSdkVersion
+		INJECTED from /Users/weishu/dev/github/understand-plugin-framework/intercept-activity/src/main/AndroidManifest.xml
+		INJECTED from /Users/weishu/dev/github/understand-plugin-framework/intercept-activity/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/weishu/dev/github/understand-plugin-framework/intercept-activity/src/main/AndroidManifest.xml
+		INJECTED from /Users/weishu/dev/github/understand-plugin-framework/intercept-activity/src/main/AndroidManifest.xml
