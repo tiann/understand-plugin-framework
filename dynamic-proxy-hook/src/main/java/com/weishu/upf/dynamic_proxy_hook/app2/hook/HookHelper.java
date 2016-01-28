@@ -3,6 +3,7 @@ package com.weishu.upf.dynamic_proxy_hook.app2.hook;
 import android.app.Instrumentation;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 /**
  * @author weishu
@@ -13,9 +14,9 @@ public class HookHelper {
     public static void attachContext() throws Exception{
         // 先获取到当前的ActivityThread对象
         Class<?> activityThreadClass = Class.forName("android.app.ActivityThread");
-        Field currentActivityThreadField = activityThreadClass.getDeclaredField("sCurrentActivityThread");
-        currentActivityThreadField.setAccessible(true);
-        Object currentActivityThread = currentActivityThreadField.get(null);
+        Method currentActivityThreadMethod = activityThreadClass.getDeclaredMethod("currentActivityThread");
+        currentActivityThreadMethod.setAccessible(true);
+        Object currentActivityThread = currentActivityThreadMethod.invoke(null);
 
         // 拿到原始的 mInstrumentation字段
         Field mInstrumentationField = activityThreadClass.getDeclaredField("mInstrumentation");

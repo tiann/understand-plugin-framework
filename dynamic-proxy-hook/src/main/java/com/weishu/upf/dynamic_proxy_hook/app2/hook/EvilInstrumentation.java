@@ -30,8 +30,8 @@ public class EvilInstrumentation extends Instrumentation {
             Intent intent, int requestCode, Bundle options) {
 
         // Hook之前, XXX到此一游!
-        Log.d(TAG, "执行了startActivity, 参数如下: " + "who = [" + who + "], contextThread = [" + contextThread + "], token = [" + token + "], target = [" + target + "], intent = [" + intent +
-                "], requestCode = [" + requestCode + "], options = [" + options + "]");
+        Log.d(TAG, "\n执行了startActivity, 参数如下: \n" + "who = [" + who + "], \ncontextThread = [" + contextThread + "], \ntoken = [" + token + "], \ntarget = [" + target + "], \nintent = [" + intent +
+                "], \nrequestCode = [" + requestCode + "], \noptions = [" + options + "]");
 
         // 开始调用原始的方法, 调不调用随你,但是不调用的话, 所有的startActivity都失效了.
         // 由于这个方法是隐藏的,因此需要使用反射调用;首先找到这个方法
