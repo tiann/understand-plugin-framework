@@ -18,9 +18,9 @@ public class TestDynamic {
         System.out.println(Arrays.toString(women.doShopping(100)));
 
         // 招代理
-        women = (Shopping) Proxy.newProxyInstance(Shopping.class.getClassLoader(), women.getClass().getInterfaces(), new ShoppingHandler(women));
+        women = (Shopping) Proxy.newProxyInstance(Shopping.class.getClassLoader(),
+                women.getClass().getInterfaces(), new ShoppingHandler(women));
 
         System.out.println(Arrays.toString(women.doShopping(100)));
-
     }
 }
