@@ -1,5 +1,5 @@
 # understand-plugin-framework
-深入理解插件化框架，内容如下：
+分析[DroidPlugin][2]，深入理解插件化框架，内容如下：
 
 - [Hook机制之动态代理][1]
 - Hook机制之Binder Hook
@@ -16,3 +16,4 @@
 - 插件化的未来
 
 [1]: http://weishu.me/2016/01/28/understand-plugin-framework-proxy-hook/
+[2]: https://github.com/Qihoo360/DroidPlugin
