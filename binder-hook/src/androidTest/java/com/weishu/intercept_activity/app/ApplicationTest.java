@@ -1,4 +1,4 @@
-package com.weishu.understand_plugin_framework.app;
+package com.weishu.intercept_activity.app;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

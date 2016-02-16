@@ -3,7 +3,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.3.0'
+        classpath 'com.android.tools.build:gradle:1.2.3'
     }
 }
 apply plugin: 'com.android.application'
@@ -17,8 +17,8 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.weishu.understand_plugin_framework.app"
-        minSdkVersion 9
+        applicationId "com.weishu.binder_hook.app"
+        minSdkVersion 8
         targetSdkVersion 19
         versionCode 1
         versionName "1.0"
