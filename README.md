@@ -5,8 +5,8 @@
 - [Hook机制之Binder Hook][3]
 - Activity生命周期管理，占坑和Hook
 - 广播的处理方式
-- Service的处理方式
-- Service处理方式
+- Service组件的管理，占坑和Hook
+- ContentProvider的管理
 - 插件加载解析之自定义包管理服务(PackageManager)
 - 插件进程管理机制（ActivityMAnager）
 - 插件机制之资源管理
