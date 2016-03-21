@@ -14,7 +14,7 @@ gen/
 
 # Gradle files
 .gradle/
-build/**
+build/
 .idea/
 
 # Local configuration file (sdk path, etc)
