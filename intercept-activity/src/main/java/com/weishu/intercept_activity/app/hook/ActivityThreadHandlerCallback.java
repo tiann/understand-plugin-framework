@@ -1,16 +1,16 @@
 package com.weishu.intercept_activity.app.hook;
 
+import java.lang.reflect.Field;
+
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
-
-import java.lang.reflect.Field;
 
 /**
  * @author weishu
  * @date 16/1/7
  */
-public class ActivityThreadHandlerCallback implements Handler.Callback{
+/* package */ class ActivityThreadHandlerCallback implements Handler.Callback {
 
     Handler mBase;
 
@@ -40,21 +40,23 @@ public class ActivityThreadHandlerCallback implements Handler.Callback{
         // 根据源码:
         // 这个对象是 ActivityClientRecord 类型
         // 我们修改它的intent字段为我们原来保存的即可.
-//        switch (msg.what) {
-//            case LAUNCH_ACTIVITY: {
-//                Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "activityStart");
-//                final ActivityClientRecord r = (ActivityClientRecord) msg.obj;
-//
-//                r.packageInfo = getPackageInfoNoCheck(
-//                        r.activityInfo.applicationInfo, r.compatInfo);
-//                handleLaunchActivity(r, null);
+/*        switch (msg.what) {
+/             case LAUNCH_ACTIVITY: {
+/                 Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "activityStart");
+/                 final ActivityClientRecord r = (ActivityClientRecord) msg.obj;
+/
+/                 r.packageInfo = getPackageInfoNoCheck(
+/                         r.activityInfo.applicationInfo, r.compatInfo);
+/                 handleLaunchActivity(r, null);
+*/
 
         try {
+            // 把替身恢复成真身
             Field intent = obj.getClass().getDeclaredField("intent");
             intent.setAccessible(true);
             Intent raw = (Intent) intent.get(obj);
 
-            Intent target = raw.getParcelableExtra("intent");
+            Intent target = raw.getParcelableExtra(HookHelper.EXTRA_TARGET_INTENT);
             raw.setComponent(target.getComponent());
 
         } catch (NoSuchFieldException e) {

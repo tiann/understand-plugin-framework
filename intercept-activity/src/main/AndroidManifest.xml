@@ -14,10 +14,8 @@
             </intent-filter>
         </activity>
 
-
-
-
-        <activity android:name=".RawActivity"/>
+        <!-- 替身Activity, 用来欺骗AMS  -->
+        <activity android:name=".StubActivity"/>
 
 
     </application>
