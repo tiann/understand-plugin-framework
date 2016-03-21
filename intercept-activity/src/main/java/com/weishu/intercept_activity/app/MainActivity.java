@@ -1,18 +1,18 @@
 package com.weishu.intercept_activity.app;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Proxy;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+
 import com.weishu.intercept_activity.app.hook.ActivityThreadHandlerCallback;
 import com.weishu.intercept_activity.app.hook.IActivityManagerHandler;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Modifier;
-import java.lang.reflect.Proxy;
 
 /**
  * Created by weishu on 16/1/7.
@@ -130,12 +130,4 @@ public class MainActivity extends Activity {
 
     }
 
-    protected static void makeModifiable(Field nameField) throws Exception {
-        nameField.setAccessible(true);
-        int modifiers = nameField.getModifiers();
-        Field modifierField = nameField.getClass().getDeclaredField("modifiers");
-        modifiers = modifiers & ~Modifier.FINAL;
-        modifierField.setAccessible(true);
-        modifierField.setInt(nameField, modifiers);
-    }
 }
