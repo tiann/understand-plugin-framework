@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.weishu.intercept_activity.app.hook.HookHelper;
+import com.weishu.intercept_activity.app.hook.AMSHookHelper;
 
 /**
  * @author weishu
@@ -20,8 +20,8 @@ public class MainActivity extends Activity {
         super.attachBaseContext(newBase);
 
         try {
-            HookHelper.hookActivityManagerNative();
-            HookHelper.hookActivityThreadHandler();
+            AMSHookHelper.hookActivityManagerNative();
+            AMSHookHelper.hookActivityThreadHandler();
         } catch (Throwable throwable) {
             throw new RuntimeException("hook failed", throwable);
         }

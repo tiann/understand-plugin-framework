@@ -40,15 +40,15 @@ import android.os.Message;
         // 根据源码:
         // 这个对象是 ActivityClientRecord 类型
         // 我们修改它的intent字段为我们原来保存的即可.
-/*        switch (msg.what) {
-/             case LAUNCH_ACTIVITY: {
-/                 Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "activityStart");
-/                 final ActivityClientRecord r = (ActivityClientRecord) msg.obj;
-/
-/                 r.packageInfo = getPackageInfoNoCheck(
-/                         r.activityInfo.applicationInfo, r.compatInfo);
-/                 handleLaunchActivity(r, null);
-*/
+        // switch (msg.what) {
+        //      case LAUNCH_ACTIVITY: {
+        //          Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "activityStart");
+        //          final ActivityClientRecord r = (ActivityClientRecord) msg.obj;
+
+        //          r.packageInfo = getPackageInfoNoCheck(
+        //                  r.activityInfo.applicationInfo, r.compatInfo);
+        //         handleLaunchActivity(r, null);
+
 
         try {
             // 把替身恢复成真身
@@ -56,7 +56,7 @@ import android.os.Message;
             intent.setAccessible(true);
             Intent raw = (Intent) intent.get(obj);
 
-            Intent target = raw.getParcelableExtra(HookHelper.EXTRA_TARGET_INTENT);
+            Intent target = raw.getParcelableExtra(AMSHookHelper.EXTRA_TARGET_INTENT);
             raw.setComponent(target.getComponent());
 
         } catch (NoSuchFieldException e) {

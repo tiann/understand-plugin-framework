@@ -10,7 +10,7 @@ import android.os.Handler;
  * @author weishu
  * @date 16/3/21
  */
-public class HookHelper {
+public class AMSHookHelper {
 
     public static final String EXTRA_TARGET_INTENT = "extra_target_intent";
 

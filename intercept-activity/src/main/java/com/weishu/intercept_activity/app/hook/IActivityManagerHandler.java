@@ -49,15 +49,15 @@ import com.weishu.intercept_activity.app.StubActivity;
 
             Intent newIntent = new Intent();
 
-            // 这里包名直接写死,如果再插件里,不同的插件有不同的包  传递插件的包名即可
-            String targetPackage = "com.weishu.intercept_activity.app";
+            // 替身Activity的包名, 也就是我们自己的包名
+            String stubPackage = "com.weishu.intercept_activity.app";
 
             // 这里我们把启动的Activity临时替换为 StubActivity
-            ComponentName componentName = new ComponentName(targetPackage, StubActivity.class.getCanonicalName());
+            ComponentName componentName = new ComponentName(stubPackage, StubActivity.class.getName());
             newIntent.setComponent(componentName);
 
             // 把我们原始要启动的TargetActivity先存起来
-            newIntent.putExtra(HookHelper.EXTRA_TARGET_INTENT, raw);
+            newIntent.putExtra(AMSHookHelper.EXTRA_TARGET_INTENT, raw);
 
             // 替换掉Intent, 达到欺骗AMS的目的
             args[index] = newIntent;

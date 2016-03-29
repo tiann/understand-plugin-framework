@@ -1,8 +1,6 @@
 package com.weishu.intercept_activity.app;
 
 import android.app.Activity;
-import android.os.Bundle;
-import android.widget.TextView;
 
 /**
  * 原始的Activity; 这个Activity会在Manifest中注册;
@@ -22,14 +20,5 @@ import android.widget.TextView;
  * Created by weishu on 16/1/7.
  */
 public class StubActivity extends Activity {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        TextView tv = new TextView(this);
-
-        // you should never see this
-        tv.setText("StubActivity, 目标Activity启动中");
-
-        setContentView(tv);
-    }
+    // dummy, just stub
 }
