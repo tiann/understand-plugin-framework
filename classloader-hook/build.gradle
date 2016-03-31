@@ -13,13 +13,13 @@ repositories {
 }
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 19
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.weishu.upf.dynamic_proxy_hook.app2"
+        applicationId "com.weishu.upf.hook_classloader"
         minSdkVersion 8
-        targetSdkVersion 23
+        targetSdkVersion 19
         versionCode 1
         versionName "1.0"
     }

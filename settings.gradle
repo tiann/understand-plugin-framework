@@ -1,1 +1,5 @@
-include ':intercept-activity', ':dynamic-proxy-hook', ':ams-pms-hook', 'binder-hook'
+include ':intercept-activity'
+include ':dynamic-proxy-hook'
+include ':ams-pms-hook'
+include 'binder-hook'
+include 'classloader-hook'
