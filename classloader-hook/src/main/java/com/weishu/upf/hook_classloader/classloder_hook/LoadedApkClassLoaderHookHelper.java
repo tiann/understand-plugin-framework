@@ -6,12 +6,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
-import android.os.UserHandle;
 
 import com.weishu.upf.hook_classloader.Utils;
 
@@ -45,7 +42,7 @@ public class LoadedApkClassLoaderHookHelper {
         defaultCompatibilityInfoField.setAccessible(true);
 
         Object defaultCompatibilityInfo = defaultCompatibilityInfoField.get(null);
-        ApplicationInfo applicationInfo = generateApplicationInfo(apkFile, 0);
+        ApplicationInfo applicationInfo = generateApplicationInfo(apkFile);
 
         Object loadedApk = getPackageInfoNoCheckMethod.invoke(currentActivityThread, applicationInfo, defaultCompatibilityInfo);
 
@@ -67,35 +64,33 @@ public class LoadedApkClassLoaderHookHelper {
      * 这个方法的最终目的是调用
      * android.content.pm.PackageParser#generateActivityInfo(android.content.pm.PackageParser.Activity, int, android.content.pm.PackageUserState, int)
      */
-    public static ApplicationInfo generateApplicationInfo(File apkFile, int flags)
+    public static ApplicationInfo generateApplicationInfo(File apkFile)
             throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchFieldException {
 
-        // 首先找出需要反射的核心类: android.content.pm.PackageParser
+        // 找出需要反射的核心类: android.content.pm.PackageParser
         Class<?> packageParserClass = Class.forName("android.content.pm.PackageParser");
 
-        // 我们的终极目标: android.content.pm.PackageParser#generateActivityInfo(android.content.pm.PackageParser.Activity, int, android.content.pm.PackageUserState, int)
+        // 我们的终极目标: android.content.pm.PackageParser#generateApplicationInfo(android.content.pm.PackageParser.Package,
+        // int, android.content.pm.PackageUserState)
         // 要调用这个方法, 需要做很多准备工作; 考验反射技术的时候到了 - -!
-        // 首先, 这个里面的参数 Activity类并不是我们通常使用的 android.app.Activity, 而是PackageParser的一个内部类
-        // 因此, 我们得创建出一个Activity对象出来供这个方法调用
-        // 而这个需要得对象可以通过 android.content.pm.PackageParser#parsePackage 这个方法返回得 Package对象得字段获取得到
         // 下面, 我们开始这场Hack之旅吧!
 
-        // 首先拿到我们得终极目标: generateActivityInfo方法
-        //     public static final ActivityInfo generateActivityInfo(Activity a, int flags,
-        // PackageUserState state, int userId)
-        Class<?> packageParser$ActivityClass = Class.forName("android.content.pm.PackageParser$Activity");
+        // 首先拿到我们得终极目标: generateApplicationInfo方法
+        // API 23 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // public static ApplicationInfo generateApplicationInfo(Package p, int flags,
+        //    PackageUserState state) {
+        // 其他Android版本不保证也是如此.
+        Class<?> packageParser$PackageClass = Class.forName("android.content.pm.PackageParser$Package");
         Class<?> packageUserStateClass = Class.forName("android.content.pm.PackageUserState");
-        Method generateActivityInfoMethod = packageParserClass.getDeclaredMethod("generateActivityInfo",
-                packageParser$ActivityClass,
+        Method generateApplicationInfoMethod = packageParserClass.getDeclaredMethod("generateApplicationInfo",
+                packageParser$PackageClass,
                 int.class,
-                packageUserStateClass,
-                int.class);
+                packageUserStateClass);
 
         // 接下来构建需要得参数
 
-        // 第一个参数 Activity信息
-        Object targetActivity;
-
+        // 首先, 我们得创建出一个Package对象出来供这个方法调用
+        // 而这个需要得对象可以通过 android.content.pm.PackageParser#parsePackage 这个方法返回得 Package对象得字段获取得到
         // 创建出一个PackageParser对象供使用
         Object packageParser = packageParserClass.newInstance();
         // 调用 PackageParser.parsePackage 解析apk的信息
@@ -104,34 +99,12 @@ public class LoadedApkClassLoaderHookHelper {
         // 实际上是一个 android.content.pm.PackageParser.Package 对象
         Object packageObj = parsePackageMethod.invoke(packageParser, apkFile, 0);
 
-        // 拿到上面那个对象的class表示, 下面反射用
-        Class<?> parseParse$PackageClass = packageObj.getClass();
-
-        // 获取它的 android.content.pm.PackageParser.Package#activities 这个字段
-        Field acitvitiesField = parseParse$PackageClass.getDeclaredField("activities");
-
-        // 实际上是一个List
-        List activities = (List) acitvitiesField.get(packageObj);
-
-        if (activities.size() <= 0) {
-            throw new RuntimeException("no activities found in " + apkFile);
-        }
-
-        // 随便拿一个Activity当作参数就行, 第一个参数找出完毕
-        targetActivity = activities.get(0);
-
-        // 第二个参数flags, 由用户传递
-
         // 第三个参数 mDefaultPackageUserState 我们直接使用默认构造函数构造一个出来即可
         Object defaultPackageUserState = packageUserStateClass.newInstance();
 
-        // 第四个参数 userId : 调用UserHandle.getCallingUserId
-        Method getCallingUserIdMethod = UserHandle.class.getDeclaredMethod("getCallingUserId");
-        Object userId = getCallingUserIdMethod.invoke(null);
-
-        // 万事具备!!!!!!!!!!!!!! 开始获取Activity信息
-        ActivityInfo activityInfo = (ActivityInfo) generateActivityInfoMethod.invoke(packageParser, targetActivity, flags, defaultPackageUserState, userId);
-        ApplicationInfo applicationInfo = activityInfo.applicationInfo;
+        // 万事具备!!!!!!!!!!!!!!
+        ApplicationInfo applicationInfo = (ApplicationInfo) generateApplicationInfoMethod.invoke(packageParser,
+                packageObj, 0, defaultPackageUserState);
         String apkPath = apkFile.getPath();
 
         applicationInfo.sourceDir = apkPath;

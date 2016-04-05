@@ -71,33 +71,44 @@ import com.weishu.upf.hook_classloader.classloder_hook.LoadedApkClassLoaderHookH
             String packageName = target.getPackage() == null ? target.getComponent().getPackageName() : target.getPackage();
             activityInfo.applicationInfo.packageName = packageName;
 
-            Object loadedApk = LoadedApkClassLoaderHookHelper.sLoadedApk.get(packageName);
-
-            // android.app.LoadedApk#makeApplication
-            Method makeApplicationMethod = loadedApk.getClass().getDeclaredMethod("makeApplication", boolean.class, Instrumentation.class);
-            Class<?> activityThreadClass = Class.forName("android.app.ActivityThread");
-            Method currentActivityThreadMethod = activityThreadClass.getDeclaredMethod("currentActivityThread");
-            currentActivityThreadMethod.setAccessible(true);
-            Object currentActivityThread = currentActivityThreadMethod.invoke(null);
-            Method getInstrumentationMethod = activityThreadClass.getDeclaredMethod("getInstrumentation");
-            Object instrumentation = getInstrumentationMethod.invoke(currentActivityThread);
-
-            // 获取ActivityThread里面原始的 sPackageManager
-            Field sPackageManagerField = activityThreadClass.getDeclaredField("sPackageManager");
-            sPackageManagerField.setAccessible(true);
-            Object sPackageManager = sPackageManagerField.get(currentActivityThread);
-
-            // 准备好代理对象, 用来替换原始的对象
-            Class<?> iPackageManagerInterface = Class.forName("android.content.pm.IPackageManager");
-            Object proxy = Proxy.newProxyInstance(iPackageManagerInterface.getClassLoader(),
-                    new Class<?>[] { iPackageManagerInterface },
-                    new IPackageManagerHookHandler(sPackageManager));
-
-            // 1. 替换掉ActivityThread里面的 sPackageManager 字段
-            sPackageManagerField.set(currentActivityThread, proxy);
-            makeApplicationMethod.invoke(loadedApk, false, instrumentation);
+            makeApplication(packageName);
         } catch (Exception e) {
             throw new RuntimeException("hook launch activity failed", e);
         }
+    }
+
+    private static void makeApplication(String packageName) throws Exception {
+        Object loadedApk = LoadedApkClassLoaderHookHelper.sLoadedApk.get(packageName);
+
+        // android.app.LoadedApk#makeApplication
+        Method makeApplicationMethod = loadedApk.getClass().getDeclaredMethod("makeApplication", boolean.class, Instrumentation.class);
+
+        // 构造 android.app.LoadedApk#makeApplication 需要的第二个参数: Instrumentation
+        Class<?> activityThreadClass = Class.forName("android.app.ActivityThread");
+        Method currentActivityThreadMethod = activityThreadClass.getDeclaredMethod("currentActivityThread");
+        currentActivityThreadMethod.setAccessible(true);
+        Object currentActivityThread = currentActivityThreadMethod.invoke(null);
+        Method getInstrumentationMethod = activityThreadClass.getDeclaredMethod("getInstrumentation");
+        Object instrumentation = getInstrumentationMethod.invoke(currentActivityThread);
+
+        // 这一步是因为 initializeJavaContextClassLoader 这个方法内部无意中检查了这个包是否在系统安装
+        // 如果没有安装, 直接抛出异常, 这里需要临时Hook掉 PMS, 绕过这个检查.
+
+        // 获取ActivityThread里面原始的 sPackageManager
+        Field sPackageManagerField = activityThreadClass.getDeclaredField("sPackageManager");
+        sPackageManagerField.setAccessible(true);
+        Object sPackageManager = sPackageManagerField.get(currentActivityThread);
+
+        // 准备好代理对象, 用来替换原始的对象
+        Class<?> iPackageManagerInterface = Class.forName("android.content.pm.IPackageManager");
+        Object proxy = Proxy.newProxyInstance(iPackageManagerInterface.getClassLoader(),
+                new Class<?>[] { iPackageManagerInterface },
+                new IPackageManagerHookHandler(sPackageManager));
+
+        // 1. 替换掉ActivityThread里面的 sPackageManager 字段
+        sPackageManagerField.set(currentActivityThread, proxy);
+
+        // The final Step: makeApplication !!
+        makeApplicationMethod.invoke(loadedApk, false, instrumentation);
     }
 }
