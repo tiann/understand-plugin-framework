@@ -4,13 +4,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
-import android.app.Instrumentation;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Handler;
 import android.os.Message;
-
-import com.weishu.upf.hook_classloader.classloder_hook.LoadedApkClassLoaderHookHelper;
 
 /**
  * @author weishu
@@ -66,33 +63,28 @@ import com.weishu.upf.hook_classloader.classloder_hook.LoadedApkClassLoaderHookH
 
             Field activityInfoField = obj.getClass().getDeclaredField("activityInfo");
             activityInfoField.setAccessible(true);
+
+            // 根据 getPackageInfo 根据这个 包名获取 LoadedApk的信息; 因此这里我们需要手动填上, 从而能够命中缓存
             ActivityInfo activityInfo = (ActivityInfo) activityInfoField.get(obj);
 
-            String packageName = target.getPackage() == null ? target.getComponent().getPackageName() : target.getPackage();
-            activityInfo.applicationInfo.packageName = packageName;
+            activityInfo.applicationInfo.packageName = target.getPackage() == null ?
+                    target.getComponent().getPackageName() : target.getPackage();
 
-            makeApplication(packageName);
+            hookPackageManager();
         } catch (Exception e) {
             throw new RuntimeException("hook launch activity failed", e);
         }
     }
 
-    private static void makeApplication(String packageName) throws Exception {
-        Object loadedApk = LoadedApkClassLoaderHookHelper.sLoadedApk.get(packageName);
+    private static void hookPackageManager() throws Exception {
 
-        // android.app.LoadedApk#makeApplication
-        Method makeApplicationMethod = loadedApk.getClass().getDeclaredMethod("makeApplication", boolean.class, Instrumentation.class);
+        // 这一步是因为 initializeJavaContextClassLoader 这个方法内部无意中检查了这个包是否在系统安装
+        // 如果没有安装, 直接抛出异常, 这里需要临时Hook掉 PMS, 绕过这个检查.
 
-        // 构造 android.app.LoadedApk#makeApplication 需要的第二个参数: Instrumentation
         Class<?> activityThreadClass = Class.forName("android.app.ActivityThread");
         Method currentActivityThreadMethod = activityThreadClass.getDeclaredMethod("currentActivityThread");
         currentActivityThreadMethod.setAccessible(true);
         Object currentActivityThread = currentActivityThreadMethod.invoke(null);
-        Method getInstrumentationMethod = activityThreadClass.getDeclaredMethod("getInstrumentation");
-        Object instrumentation = getInstrumentationMethod.invoke(currentActivityThread);
-
-        // 这一步是因为 initializeJavaContextClassLoader 这个方法内部无意中检查了这个包是否在系统安装
-        // 如果没有安装, 直接抛出异常, 这里需要临时Hook掉 PMS, 绕过这个检查.
 
         // 获取ActivityThread里面原始的 sPackageManager
         Field sPackageManagerField = activityThreadClass.getDeclaredField("sPackageManager");
@@ -107,8 +99,5 @@ import com.weishu.upf.hook_classloader.classloder_hook.LoadedApkClassLoaderHookH
 
         // 1. 替换掉ActivityThread里面的 sPackageManager 字段
         sPackageManagerField.set(currentActivityThread, proxy);
-
-        // The final Step: makeApplication !!
-        makeApplicationMethod.invoke(loadedApk, false, instrumentation);
     }
 }
