@@ -5,6 +5,7 @@
 - [Hook机制之Binder Hook][3]
 - [Hook机制之AMS&PMS][4]
 - [Activity生命周期管理][5]
+- [插件加载机制][6]
 - 广播的处理方式
 - Service组件的管理，占坑和Hook
 - ContentProvider的管理
@@ -21,3 +22,4 @@
 [3]: http://weishu.me/2016/02/16/understand-plugin-framework-binder-hook/
 [4]: http://weishu.me/2016/03/07/understand-plugin-framework-ams-pms-hook/
 [5]: http://weishu.me/2016/03/21/understand-plugin-framework-activity-management/
+[6]: http://weishu.me/2016/04/05/understand-plugin-framework-classloader/
