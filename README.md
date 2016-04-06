@@ -17,7 +17,7 @@
 - 不同插件框架方案对比
 - 插件化的未来
 
-[1]: https://github.com/Qihoo360/DroidPlugin
+[1]: https://github.com/DroidPluginTeam/DroidPlugin
 [2]: http://weishu.me/2016/01/28/understand-plugin-framework-proxy-hook/
 [3]: http://weishu.me/2016/02/16/understand-plugin-framework-binder-hook/
 [4]: http://weishu.me/2016/03/07/understand-plugin-framework-ams-pms-hook/
