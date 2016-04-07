@@ -7,16 +7,21 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
 import com.weishu.upf.dynamic_proxy_hook.app2.hook.HookHelper;
 
 /**
  * @author weishu
  * @date 16/1/28
  */
-public class MainActivity extends Activity{
+public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // TODO: 16/1/28 支持Activity直接跳转请在这里Hook
+        // 家庭作业,留给读者完成.
+
         Button tv = new Button(this);
         tv.setText("测试界面");
 
@@ -44,9 +49,6 @@ public class MainActivity extends Activity{
         try {
             // 在这里进行Hook
             HookHelper.attachContext();
-
-            // TODO: 16/1/28 支持Activity直接跳转请在这里Hook
-            // 家庭作业,留给读者完成.
         } catch (Exception e) {
             e.printStackTrace();
         }
