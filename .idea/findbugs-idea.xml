@@ -26,7 +26,7 @@
         <entry key="property.minPriorityToReport" value="Medium" />
         <entry key="property.runAnalysisInBackground" value="false" />
         <entry key="property.showHiddenDetectors" value="false" />
-        <entry key="property.toolWindowEditorPreview" value="false" />
+        <entry key="property.toolWindowEditorPreview" value="true" />
         <entry key="property.toolWindowToFront" value="true" />
       </map>
     </option>

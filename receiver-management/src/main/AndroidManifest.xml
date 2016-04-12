@@ -1,0 +1,19 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.weishu.upf.receiver_management.app">
+
+    <application
+            android:allowBackup="true"
+            android:name="com.weishu.upf.receiver_management.app.UPFApplication"
+            android:label="@string/app_name"
+            android:icon="@mipmap/ic_launcher">
+
+        <activity android:name="com.weishu.upf.receiver_management.app.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+    </application>
+
+</manifest>
