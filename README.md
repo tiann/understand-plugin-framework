@@ -7,7 +7,7 @@
 - [Activity生命周期管理][5]
 - [插件加载机制][6]
 - [广播的处理方式][7]
-- Service组件的管理，占坑和Hook
+- [Service的管理][8]
 - ContentProvider的管理
 - 插件加载解析之自定义包管理服务(PackageManager)
 - 插件进程管理机制（ActivityMAnager）
@@ -24,3 +24,4 @@
 [5]: http://weishu.me/2016/03/21/understand-plugin-framework-activity-management/
 [6]: http://weishu.me/2016/04/05/understand-plugin-framework-classloader/
 [7]: http://weishu.me/2016/04/12/understand-plugin-framework-receiver/
+[8]: http://weishu.me/2016/05/11/understand-plugin-framework-service/
