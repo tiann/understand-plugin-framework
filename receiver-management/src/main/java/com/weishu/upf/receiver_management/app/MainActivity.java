@@ -37,8 +37,8 @@ public class MainActivity extends Activity {
             }
         });
 
-        Utils.extractAssets(this, "test.apk");
-        File testPlugin = getFileStreamPath("test.apk");
+        Utils.extractAssets(this, "test.jar");
+        File testPlugin = getFileStreamPath("test.jar");
         try {
             ReceiverHelper.preLoadReceiver(this, testPlugin);
             Log.i(getClass().getSimpleName(), "hook success");

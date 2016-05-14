@@ -14,7 +14,9 @@
             </intent-filter>
         </activity>
 
-        <service android:name="com.weishu.upf.service_management.app.ProxyService"/>
+        <service
+                android:name="com.weishu.upf.service_management.app.ProxyService"
+                android:process="plugin01"/>
 
     </application>
 

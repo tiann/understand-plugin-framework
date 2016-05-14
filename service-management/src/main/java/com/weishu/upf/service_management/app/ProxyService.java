@@ -22,12 +22,15 @@ public class ProxyService extends Service {
     @Override
     public void onStart(Intent intent, int startId) {
         Log.d(TAG, "onStart() called with " + "intent = [" + intent + "], startId = [" + startId + "]");
+
+        // 分发Service
         ServiceManager.getInstance().onStart(intent, startId);
         super.onStart(intent, startId);
     }
 
     @Override
     public IBinder onBind(Intent intent) {
+        // TODO: 16/5/11 bindService实现
         return null;
     }
 

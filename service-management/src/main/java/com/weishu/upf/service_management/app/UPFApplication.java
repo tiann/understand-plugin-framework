@@ -26,8 +26,8 @@ public class UPFApplication extends Application {
         try {
             // 拦截startService, stopService等操作
             AMSHookHelper.hookActivityManagerNative();
-            Utils.extractAssets(base, "test.apk");
-            File apkFile = getFileStreamPath("test.apk");
+            Utils.extractAssets(base, "test.jar");
+            File apkFile = getFileStreamPath("test.jar");
             File odexFile = getFileStreamPath("test.odex");
 
             // Hook ClassLoader, 让插件中的类能够被成功加载

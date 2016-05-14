@@ -50,7 +50,6 @@ public final class ServiceManager {
     public void onStart(Intent proxyIntent, int startId) {
 
         Intent targetIntent = proxyIntent.getParcelableExtra(AMSHookHelper.EXTRA_TARGET_INTENT);
-
         ServiceInfo serviceInfo = selectPluginService(targetIntent);
 
         if (serviceInfo == null) {
