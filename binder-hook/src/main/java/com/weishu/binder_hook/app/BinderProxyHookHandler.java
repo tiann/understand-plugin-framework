@@ -1,12 +1,11 @@
 package com.weishu.binder_hook.app;
 
-import android.os.IBinder;
-import android.os.IInterface;
-import android.util.Log;
-
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+
+import android.os.IBinder;
+import android.util.Log;
 
 /**
  * 由于ServiceManager里面的sCache里面存储的 IBinder类型基本上都是BinderProxy
@@ -66,7 +65,14 @@ public class BinderProxyHookHandler implements InvocationHandler {
 
                     // asInterface 的时候会检测是否是特定类型的接口然后进行强制转换
                     // 因此这里的动态代理生成的类型信息的类型必须是正确的
-                    new Class[] { IBinder.class, IInterface.class, this.iinterface },
+
+                    // 这里面Hook的是一个BinderProxy对象(Binder代理) (代理Binder的queryLocalInterface正常情况下是返回null)
+                    // 因此, 正常情况下 在asInterface里面会由于BinderProxy的queryLocalInterface返回null导致系统创建一个匿名的代理对象, 这样我们就无法控制了
+                    // 所以我们要伪造一个对象, 瞒过这个if检测, 使得系统把这个queryLocalInterface返回的对象透传给asInterface的返回值;
+                    // 检测有两个要求, 其一: 非空, 其二, IXXInterface类型。
+                    // 所以, 其实返回的对象不需要是Binder对象, 我们把它当作普通的对象Hook掉就ok(拦截这个对象里面对于IXXInterface相关方法的调用)
+                    // tks  jeremyhe_cn@qq.com
+                    new Class[] { this.iinterface },
                     new BinderHookHandler(base, stub));
         }
 
