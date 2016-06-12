@@ -170,7 +170,7 @@ public final class ServiceManager {
     }
 
     /**
-     * 解析Apk文件中的 <receiver>, 并存储起来
+     * 解析Apk文件中的 <service>, 并存储起来
      * 主要是调用PackageParser类的generateServiceInfo方法
      * @param apkFile 插件对应的apk文件
      * @throws Exception 解析出错或者反射调用出错, 均会抛出异常
@@ -182,7 +182,7 @@ public final class ServiceManager {
         Object packageParser = packageParserClass.newInstance();
 
         // 首先调用parsePackage获取到apk对象对应的Package对象
-        Object packageObj = parsePackageMethod.invoke(packageParser, apkFile, PackageManager.GET_RECEIVERS);
+        Object packageObj = parsePackageMethod.invoke(packageParser, apkFile, PackageManager.GET_SERVICES);
 
         // 读取Package对象里面的services字段
         // 接下来要做的就是根据这个List<Service> 获取到Service对应的ServiceInfo
