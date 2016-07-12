@@ -1,4 +1,4 @@
-include ':intercept-activity', ':receiver-management', ':service-management'
+include ':intercept-activity', ':receiver-management', ':service-management', ':contentprovider-management'
 include ':dynamic-proxy-hook'
 include ':ams-pms-hook'
 include 'binder-hook'
