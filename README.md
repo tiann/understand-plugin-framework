@@ -8,12 +8,9 @@
 - [插件加载机制][6]
 - [广播的处理方式][7]
 - [Service的管理][8]
-- ContentProvider的管理
-- 插件加载解析之自定义包管理服务(PackageManager)
-- 插件进程管理机制（ActivityMAnager）
-- 插件机制之资源管理
+- [ContentProvider的管理][9]
 - DroidPlugin插件通信机制
-- DroidPlugin框架缺陷
+- 插件机制之资源管理
 - 不同插件框架方案对比
 - 插件化的未来
 
@@ -25,3 +22,4 @@
 [6]: http://weishu.me/2016/04/05/understand-plugin-framework-classloader/
 [7]: http://weishu.me/2016/04/12/understand-plugin-framework-receiver/
 [8]: http://weishu.me/2016/05/11/understand-plugin-framework-service/
+[9]: http://weishu.me/2016/07/12/understand-plugin-framework-content-provider/
