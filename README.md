@@ -23,7 +23,7 @@
 
 很遗憾曾经的系列文章没有写完，现在已经没机会甚至可以说不可能去把它完结了；不过幸运的是，我的良师益友包老师（我习惯称呼他为包哥）写了一本关于插件化的书——《Android插件化开发指南》，书中讲述了过去数年浩浩荡荡的插件化历程以及插件技术的方方面面；有兴趣的小伙伴可以买一本看看。
 
-[![点击购买](http://7xp3xc.com1.z0.glb.clouddn.com/201605/1535348090511.png)][1]
+[![点击购买](http://7xp3xc.com1.z0.glb.clouddn.com/201605/1535348090511.png)][10]
 
 [1]: https://github.com/DroidPluginTeam/DroidPlugin
 [2]: http://weishu.me/2016/01/28/understand-plugin-framework-proxy-hook/
@@ -34,3 +34,4 @@
 [7]: http://weishu.me/2016/04/12/understand-plugin-framework-receiver/
 [8]: http://weishu.me/2016/05/11/understand-plugin-framework-service/
 [9]: http://weishu.me/2016/07/12/understand-plugin-framework-content-provider/
+[10]: https://item.m.jd.com/product/31188356430.html?utm_source=iosapp&utm_medium=appshare&utm_campaign=t_335139774&utm_term=Wxfriends
